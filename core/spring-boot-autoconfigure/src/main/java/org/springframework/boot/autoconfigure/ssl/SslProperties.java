@@ -32,77 +32,90 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("spring.ssl")
 public class SslProperties {
 
-	/**
-	 * SSL bundles.
-	 */
-	private final Bundles bundle = new Bundles();
+    /**
+     * SSL bundles.
+     */
+    private final Bundles bundle = new Bundles();
 
-	public Bundles getBundle() {
-		return this.bundle;
-	}
+    public Bundles getBundle() {
+        return this.bundle;
+    }
 
-	/**
-	 * Properties to define SSL Bundles.
-	 */
-	public static class Bundles {
+    /**
+     * Properties to define SSL Bundles.
+     */
+    public static class Bundles {
 
-		/**
-		 * PEM-encoded SSL trust material.
-		 */
-		private final Map<String, PemSslBundleProperties> pem = new LinkedHashMap<>();
+        /**
+         * PEM-encoded SSL trust material.
+         */
+        private final Map<String, PemSslBundleProperties> pem = new LinkedHashMap<>();
 
-		/**
-		 * Java keystore SSL trust material.
-		 */
-		private final Map<String, JksSslBundleProperties> jks = new LinkedHashMap<>();
+        /**
+         * Java keystore SSL trust material.
+         */
+        private final Map<String, JksSslBundleProperties> jks = new LinkedHashMap<>();
 
-		/**
-		 * Trust material watching.
-		 */
-		private final Watch watch = new Watch();
+        /**
+         * Trust material watching.
+         */
+        private final Watch watch = new Watch();
 
-		public Map<String, PemSslBundleProperties> getPem() {
-			return this.pem;
-		}
+        public Map<String, PemSslBundleProperties> getPem() {
+            return this.pem;
+        }
 
-		public Map<String, JksSslBundleProperties> getJks() {
-			return this.jks;
-		}
+        public Map<String, JksSslBundleProperties> getJks() {
+            return this.jks;
+        }
 
-		public Watch getWatch() {
-			return this.watch;
-		}
+        public Watch getWatch() {
+            return this.watch;
+        }
 
-		public static class Watch {
+        public static class Watch {
 
-			/**
-			 * File watching.
-			 */
-			private final File file = new File();
+            /**
+             * File watching.
+             */
+            private final File file = new File();
 
-			public File getFile() {
-				return this.file;
-			}
+            public File getFile() {
+                return this.file;
+            }
 
-			public static class File {
+            public static class File {
 
-				/**
-				 * Quiet period, after which changes are detected.
-				 */
-				private Duration quietPeriod = Duration.ofSeconds(10);
+                /**
+                 * Whether file watching is enabled.
+                 */
+                private boolean enabled = true;
 
-				public Duration getQuietPeriod() {
-					return this.quietPeriod;
-				}
+                /**
+                 * Quiet period, after which changes are detected.
+                 */
+                private Duration quietPeriod = Duration.ofSeconds(10);
 
-				public void setQuietPeriod(Duration quietPeriod) {
-					this.quietPeriod = quietPeriod;
-				}
+                public boolean isEnabled() {
+                    return this.enabled;
+                }
 
-			}
+                public void setEnabled(boolean enabled) {
+                    this.enabled = enabled;
+                }
 
-		}
+                public Duration getQuietPeriod() {
+                    return this.quietPeriod;
+                }
 
-	}
+                public void setQuietPeriod(Duration quietPeriod) {
+                    this.quietPeriod = quietPeriod;
+                }
+
+            }
+
+        }
+
+    }
 
 }
